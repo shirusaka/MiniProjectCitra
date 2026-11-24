@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto bg-white p-8 rounded shadow-md">
+    <h1 class="text-2xl font-bold mb-6 text-gray-800">Edit Anggota Keluarga</h1>
+
+    <form method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="col-span-full">
+            <label class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
+            <input type="text" name="nama_lengkap" value="{{ agt.nama_lengkap }}" class="w-full border rounded px-3 py-2" required>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">NIK</label>
+            <input type="text" name="nik" value="{{ agt.nik }}" class="w-full border rounded px-3 py-2" required>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Jenis Kelamin</label>
+            <select name="jenis_kelamin" class="w-full border rounded px-3 py-2">
+                <option value="LAKI-LAKI" {% if agt.jenis_kelamin == 'LAKI-LAKI' %}selected{% endif %}>LAKI-LAKI</option>
+                <option value="PEREMPUAN" {% if agt.jenis_kelamin == 'PEREMPUAN' %}selected{% endif %}>PEREMPUAN</option>
+            </select>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Tempat Lahir</label>
+            <input type="text" name="tempat_lahir" value="{{ agt.tempat_lahir }}" class="w-full border rounded px-3 py-2">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Tanggal Lahir</label>
+            <input type="date" name="tanggal_lahir" value="{{ agt.tanggal_lahir }}" class="w-full border rounded px-3 py-2">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Agama</label>
+            <input type="text" name="agama" value="{{ agt.agama }}" class="w-full border rounded px-3 py-2">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Status Hubungan</label>
+            <input type="text" name="status_hubungan" value="{{ agt.status_hubungan }}" class="w-full border rounded px-3 py-2">
+        </div>
+
+        <div class="col-span-full flex justify-end space-x-3 mt-6">
+            <a href="{{ url_for('main.detail', nomor_kk=agt.nomor_kk) }}" class="px-4 py-2 border rounded">Batal</a>
+            <button type="submit" class="px-6 py-2 bg-blue-600 text-white font-bold rounded hover:bg-blue-700">Simpan Perubahan</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto bg-white p-8 rounded shadow-md">
+    <h1 class="text-2xl font-bold mb-6 text-gray-800">Edit Identitas Kartu Keluarga</h1>
+
+    <form method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="col-span-full">
+            <label class="block text-sm font-medium text-gray-700">Nomor KK (Read Only)</label>
+            <input type="text" value="{{ kk.nomor_kk }}" class="w-full bg-gray-100 border rounded px-3 py-2" readonly>
+        </div>
+        <div class="col-span-full">
+            <label class="block text-sm font-medium text-gray-700">Nama Kepala Keluarga</label>
+            <input type="text" name="nama_kepala_keluarga" value="{{ kk.nama_kepala_keluarga }}" class="w-full border rounded px-3 py-2">
+        </div>
+        <div class="col-span-full">
+            <label class="block text-sm font-medium text-gray-700">Alamat</label>
+            <input type="text" name="alamat" value="{{ kk.alamat }}" class="w-full border rounded px-3 py-2">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">RT / RW</label>
+            <input type="text" name="rt_rw" value="{{ kk.rt_rw }}" class="w-full border rounded px-3 py-2">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Desa / Kelurahan</label>
+            <input type="text" name="desa_kelurahan" value="{{ kk.desa_kelurahan }}" class="w-full border rounded px-3 py-2">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Kecamatan</label>
+            <input type="text" name="kecamatan" value="{{ kk.kecamatan }}" class="w-full border rounded px-3 py-2">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Kabupaten / Kota</label>
+            <input type="text" name="kabupaten_kota" value="{{ kk.kabupaten_kota }}" class="w-full border rounded px-3 py-2">
+        </div>
+
+        <div class="col-span-full flex justify-end space-x-3 mt-6">
+            <a href="{{ url_for('main.detail', nomor_kk=kk.nomor_kk) }}" class="px-4 py-2 border rounded">Batal</a>
+            <button type="submit" class="px-6 py-2 bg-blue-600 text-white font-bold rounded hover:bg-blue-700">Simpan Perubahan</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

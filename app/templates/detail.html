@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="bg-white p-6 rounded shadow-md mb-8">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold text-gray-800">Detail Kartu Keluarga</h1>
+        <div class="space-x-2">
+            <a href="{{ url_for('main.edit_kk', nomor_kk=kk.nomor_kk) }}" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">Edit Identitas</a>
+            <a href="{{ url_for('main.index') }}" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Kembali</a>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-blue-50 p-6 rounded-lg">
+        <div>
+            <p class="text-xs font-bold text-blue-400 uppercase">Nomor KK</p>
+            <p class="text-lg font-mono font-bold">{{ kk.nomor_kk }}</p>
+        </div>
+        <div>
+            <p class="text-xs font-bold text-blue-400 uppercase">Kepala Keluarga</p>
+            <p class="text-lg font-bold">{{ kk.nama_kepala_keluarga }}</p>
+        </div>
+        <div class="md:col-span-2 border-t pt-2 mt-2">
+            <p class="text-xs font-bold text-blue-400 uppercase">Alamat Lengkap</p>
+            <p>{{ kk.alamat }} | RT/RW: {{ kk.rt_rw }} | Desa: {{ kk.desa_kelurahan }} | Kec: {{ kk.kecamatan }} | {{ kk.kabupaten_kota }} | {{ kk.provinsi }}</p>
+        </div>
+    </div>
+</div>
+
+<div class="bg-white p-6 rounded shadow-md">
+    <h2 class="text-xl font-bold mb-4 text-gray-800">Daftar Anggota Keluarga</h2>
+
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white">
+            <thead class="bg-gray-100 text-gray-600 text-sm uppercase">
+                <tr>
+                    <th class="py-3 px-4 text-left">Nama</th>
+                    <th class="py-3 px-4 text-left">NIK</th>
+                    <th class="py-3 px-4 text-left">Status Hubungan</th>
+                    <th class="py-3 px-4 text-center">Aksi</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                {% for a in kk.anggota %}
+                <tr>
+                    <td class="py-3 px-4 font-medium">{{ a.nama_lengkap }}</td>
+                    <td class="py-3 px-4 font-mono text-sm">{{ a.nik }}</td>
+                    <td class="py-3 px-4">{{ a.status_hubungan }}</td>
+                    <td class="py-3 px-4 text-center space-x-2">
+                        <a href="{{ url_for('main.edit_anggota', id=a.id) }}" class="text-blue-600 hover:underline">Edit</a>
+                        <a href="{{ url_for('main.delete_anggota', id=a.id) }}" class="text-red-600 hover:underline" onclick="return confirm('Hapus anggota ini?')">Hapus</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

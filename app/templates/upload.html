@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-xl mx-auto bg-white p-8 rounded shadow-md">
+    <h1 class="text-2xl font-bold mb-6 text-gray-800 text-center">Upload Gambar Kartu Keluarga</h1>
+
+    <form action="/upload" method="POST" enctype="multipart/form-data" class="space-y-6">
+        <div class="border-2 border-dashed border-gray-300 p-8 text-center rounded">
+            <input type="file" name="image" accept="image/*" class="hidden" id="file-upload">
+            <label for="file-upload" class="cursor-pointer block">
+                <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+                <p class="mt-2 text-gray-600">Klik untuk pilih gambar KK atau seret ke sini</p>
+                <p class="text-xs text-gray-400">PNG, JPG, JPEG (Max 16MB)</p>
+            </label>
+            <div id="file-name" class="mt-4 text-blue-600 font-medium hidden"></div>
+        </div>
+
+        <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 rounded hover:bg-blue-700 transition duration-200">
+            Mulai Baca (OCR)
+        </button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('file-upload').addEventListener('change', function(e) {
+        const fileName = e.target.files[0].name;
+        const nameEl = document.getElementById('file-name');
+        nameEl.textContent = 'File: ' + fileName;
+        nameEl.classList.remove('hidden');
+    });
+</script>
+{% endblock %}

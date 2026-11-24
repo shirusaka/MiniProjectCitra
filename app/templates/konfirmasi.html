@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="bg-white p-6 rounded shadow-md">
+    <h1 class="text-2xl font-bold mb-6 text-gray-800">Konfirmasi Hasil Pembacaan</h1>
+    <p class="text-gray-600 mb-8">Silakan periksa dan koreksi data jika ada kesalahan baca OCR sebelum disimpan.</p>
+
+    <form action="/simpan" method="POST">
+        <!-- IDENTITAS KK -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 border-b pb-8">
+            <div class="col-span-full font-bold text-lg text-blue-600 border-b pb-2 mb-4">IDENTITAS KK</div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Nomor KK</label>
+                <input type="text" name="nomor_kk" value="{{ data.identitas.nomor_kk }}" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500" required>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Nama Kepala Keluarga</label>
+                <input type="text" name="nama_kepala_keluarga" value="{{ data.identitas.nama_kepala_keluarga }}" class="w-full border rounded px-3 py-2">
+            </div>
+            <div class="col-span-full">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Alamat</label>
+                <input type="text" name="alamat" value="{{ data.identitas.alamat }}" class="w-full border rounded px-3 py-2">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">RT / RW</label>
+                <input type="text" name="rt_rw" value="{{ data.identitas.rt_rw }}" class="w-full border rounded px-3 py-2">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Desa / Kelurahan</label>
+                <input type="text" name="desa_kelurahan" value="{{ data.identitas.desa_kelurahan }}" class="w-full border rounded px-3 py-2">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Kecamatan</label>
+                <input type="text" name="kecamatan" value="{{ data.identitas.kecamatan }}" class="w-full border rounded px-3 py-2">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Kabupaten / Kota</label>
+                <input type="text" name="kabupaten_kota" value="{{ data.identitas.kabupaten_kota }}" class="w-full border rounded px-3 py-2">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Provinsi</label>
+                <input type="text" name="provinsi" value="{{ data.identitas.provinsi }}" class="w-full border rounded px-3 py-2">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Kode Pos</label>
+                <input type="text" name="kode_pos" value="{{ data.identitas.kode_pos }}" class="w-full border rounded px-3 py-2">
+            </div>
+        </div>
+
+        <!-- ANGGOTA KELUARGA -->
+        <div class="mb-8">
+            <div class="flex justify-between items-center border-b pb-2 mb-4">
+                <span class="font-bold text-lg text-blue-600">ANGGOTA KELUARGA</span>
+            </div>
+
+            <div class="space-y-6" id="members-list">
+                {% for agt in data.anggota %}
+                <div class="member-item border p-4 rounded bg-gray-50 relative">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="col-span-full md:col-span-1">
+                            <label class="block text-xs font-bold text-gray-500 uppercase">Nama Lengkap</label>
+                            <input type="text" name="nama_lengkap[]" value="{{ agt.nama_lengkap }}" class="w-full border rounded px-3 py-1">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase">NIK</label>
+                            <input type="text" name="nik[]" value="{{ agt.nik }}" class="w-full border rounded px-3 py-1">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase">Jenis Kelamin</label>
+                            <select name="jenis_kelamin[]" class="w-full border rounded px-3 py-1">
+                                <option value="LAKI-LAKI" {% if agt.jenis_kelamin == 'LAKI-LAKI' %}selected{% endif %}>LAKI-LAKI</option>
+                                <option value="PEREMPUAN" {% if agt.jenis_kelamin == 'PEREMPUAN' %}selected{% endif %}>PEREMPUAN</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase">Tempat Lahir</label>
+                            <input type="text" name="tempat_lahir[]" value="{{ agt.tempat_lahir }}" class="w-full border rounded px-3 py-1">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase">Tanggal Lahir (YYYY-MM-DD)</label>
+                            <input type="date" name="tanggal_lahir[]" value="{{ agt.tanggal_lahir }}" class="w-full border rounded px-3 py-1">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase">Agama</label>
+                            <input type="text" name="agama[]" value="{{ agt.agama }}" class="w-full border rounded px-3 py-1">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase">Pendidikan</label>
+                            <input type="text" name="pendidikan[]" value="{{ agt.pendidikan }}" class="w-full border rounded px-3 py-1">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase">Jenis Pekerjaan</label>
+                            <input type="text" name="jenis_pekerjaan[]" value="{{ agt.jenis_pekerjaan }}" class="w-full border rounded px-3 py-1">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase">Hubungan</label>
+                            <input type="text" name="status_hubungan[]" value="{{ agt.status_hubungan }}" class="w-full border rounded px-3 py-1">
+                        </div>
+                    </div>
+                    <button type="button" onclick="this.parentElement.remove()" class="absolute top-2 right-2 text-red-500 hover:text-red-700">
+                        Hapus
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="flex justify-end space-x-4 border-t pt-6">
+            <a href="/upload" class="px-6 py-2 border rounded text-gray-600 hover:bg-gray-100">Batal</a>
+            <button type="submit" class="px-8 py-2 bg-green-600 text-white font-bold rounded hover:bg-green-700 shadow">
+                Simpan ke Database
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}
